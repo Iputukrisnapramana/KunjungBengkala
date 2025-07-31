@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengkala Eksplor – Desa Wisata Budaya & Alam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-slide {
+            background: linear-gradient(rgba(26, 95, 22, 0.6), rgba(26, 95, 22, 0.3)), url('img/selamat-datang-1256x942.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #1A5F16;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: #1A5F16;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .map-container {
+            height: 400px;
+        }
+        
+        .street-view {
+            height: 300px;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .sign-language-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+            padding: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        
+        .video-tab-btn.active {
+            color: #1A5F16;
+            border-bottom-color: #1A5F16;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="https://via.placeholder.com/150x50?text=Bengkala+Logo" alt="Bengkala Eksplor Logo" class="h-10">
+                    <span class="ml-2 text-xl font-bold text-[#1A5F16]">Kunjung Bengkala</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-[#1A5F16] hover:text-green-700 px-3 py-2 font-medium">Beranda</a>
+                    <a href="#profile" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Profil Desa</a>
+                    <a href="#history" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Sejarah</a>
+                    <a href="#destinations" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Destinasi</a>
+                    <a href="#souvenirs" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Souvenir</a>
+                    <a href="#contact" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Kontak</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-[#1A5F16] focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-[#1A5F16] font-medium">Beranda</a>
+                <a href="#profile" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Profil Desa</a>
+                <a href="#history" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Sejarah</a>
+                <a href="#destinations" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Destinasi</a>
+                <a href="#souvenirs" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Souvenir</a>
+                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-slide min-h-screen flex items-center justify-center text-white pt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+            <h1 class="text-2xl md:text-4xl font-bold mb-6">Menjelajahi Warisan<br>Budaya dan Keindahan Alam<br>Bengkala</h1>
+            <p class="text-base md:text-lg mb-8 max-w-2xl mx-auto">Temukan keunikan Desa Bengkala yang memadukan keindahan alam, budaya Bali, dan kehidupan inklusif masyarakat Tuli Bengkala.</p>
+            <a href="#destinations" class="bg-white text-[#1A5F16] font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block">Explore Destinasi</a>
+            <div class="mt-16 scroll-down">
+                <a href="#profile" class="text-white">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Profil Desa Bengkala</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
+                <div class="md:w-1/2">
+                    <img src="img/selamat-datang-1256x942.jpg" alt="Desa Bengkala" class="rounded-lg shadow-xl w-full h-64 object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-bold text-[#1A5F16] mb-4">Desa yang Harmonis dengan Alam</h3>
+                    <p class="text-gray-700 mb-4">Desa Bengkala terletak di Kecamatan Kubutambahan, Kabupaten Buleleng, Bali. Dengan luas wilayah sekitar 5,5 km², desa ini berada di ketinggian 150-200 meter di atas permukaan laut.</p>
+                    <p class="text-gray-700 mb-4">Bengkala memiliki populasi sekitar 3.000 jiwa dengan mayoritas penduduk bekerja sebagai petani dan pengrajin. Desa ini dikenal dengan komunitas Tuli Bengkala yang unik, di mana bahasa isyarat lokal telah berkembang secara alami selama beberapa generasi.</p>
+                    <p class="text-gray-700">Lanskap Bengkala didominasi oleh sawah berundak dan perkebunan kelapa, dengan pemandangan indah ke arah laut dan pegunungan. Suasana pedesaan yang asri dan tradisi budaya yang masih kuat menjadikan Bengkala sebagai destinasi wisata yang autentik.</p>
+                </div>
+            </div>
+            
+            <!-- Sign Language Button -->
+            <div class="flex justify-end mb-6">
+                <button id="signLanguageBtn" class="bg-[#1A5F16] text-white p-3 rounded-full hover:bg-green-800 transition duration-300 shadow-lg" title="Tonton Video Bahasa Isyarat Bengkala (Kata Kolok)">
+                    <i class="fas fa-sign-language text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="bg-[#1A5F16] bg-opacity-10 p-8 rounded-lg">
+                <h3 class="text-xl font-bold text-[#1A5F16] mb-4 text-center">Bengkala Inklusif</h3>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/3">
+                        <img src="img/sd-2-554x415.jpg" alt="SD 2 Bengkala" class="rounded-lg shadow-md w-full h-48 object-cover">
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-gray-700 mb-4">SD 2 Bengkala merupakan sekolah inklusi yang menjadi pusat pendidikan bagi anak-anak Tuli dan mendengar di desa ini. Sekolah ini telah mengembangkan sistem pendidikan yang unik di mana semua siswa, guru, dan staf mempelajari dan menggunakan bahasa isyarat Bengkala (Kata Kolok).</p>
+                        <p class="text-gray-700">Program inklusi di SD 2 Bengkala tidak hanya mencakup pendidikan formal tetapi juga pelestarian budaya dan bahasa isyarat lokal. Sekolah ini sering menjadi tujuan penelitian dan kunjungan studi bagi akademisi dan aktivis disabilitas dari berbagai negara.</p>
+                        <div class="mt-6 flex items-center">
+                            <i class="fas fa-sign-language text-3xl text-[#1A5F16] mr-4"></i>
+                            <span class="text-gray-700">Bahasa isyarat Bengkala (Kata Kolok) telah diakui sebagai warisan budaya takbenda Indonesia.</span>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <a href="#history" class="inline-flex items-center text-[#1A5F16] hover:text-green-700 font-medium transition duration-300">
+                                <span class="mr-2">Selengkapnya</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Sejarah Bengkala</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+            </div>
+            
+            <div class="relative timeline pl-8 md:pl-16 max-w-4xl mx-auto">
+                <div class="mb-12 timeline-item relative">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Asal Usul Desa</h3>
+                        <p class="text-gray-700">Menurut prasasti dan cerita rakyat, Bengkala telah ada sejak abad ke-11 pada masa Kerajaan Bali Kuno. Nama "Bengkala" konon berasal dari kata "Bang" (tempat) dan "Kala" (waktu), yang berarti tempat yang abadi.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-12 timeline-item relative">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Legenda Komunitas Tuli</h3>
+                        <p class="text-gray-700">Legenda setempat menceritakan bahwa komunitas Tuli di Bengkala berasal dari kutukan seorang pendeta yang marah karena penduduk desa tidak menghormati upacara suci. Namun, masyarakat kini memandangnya sebagai anugerah yang membentuk identitas unik desa.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-12 timeline-item relative">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Perkembangan Bahasa Isyarat</h3>
+                        <p class="text-gray-700">Pada abad ke-20, bahasa isyarat alami Bengkala (Kata Kolok) berkembang sebagai sistem komunikasi utama antara warga Tuli dan mendengar. Bahasa ini menjadi salah satu dari sedikit bahasa isyarat desa yang masih bertahan di dunia.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item relative">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Pengakuan sebagai Desa Wisata</h3>
+                        <p class="text-gray-700">Pada tahun 2010-an, Bengkala mulai dikembangkan sebagai desa wisata budaya dan alam, dengan fokus pada keunikan komunitas Tuli dan keindahan alamnya. Desa ini kini menjadi contoh nyata kehidupan inklusif dan pelestarian budaya lokal.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                <h3 class="text-xl font-bold text-[#1A5F16] mb-4 text-center">Nilai Budaya Bengkala</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-4">
+                        <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hands-helping text-2xl text-[#1A5F16]"></i>
+                        </div>
+                        <h4 class="font-bold text-base mb-2">Inklusivitas</h4>
+                        <p class="text-gray-700">Masyarakat Bengkala hidup rukun tanpa memandang kemampuan mendengar, dengan bahasa isyarat sebagai jembatan komunikasi.</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-leaf text-2xl text-[#1A5F16]"></i>
+                        </div>
+                        <h4 class="font-bold text-base mb-2">Harmoni dengan Alam</h4>
+                        <p class="text-gray-700">Tradisi pertanian dan ritual keagamaan yang berkelanjutan mencerminkan penghormatan terhadap alam.</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-history text-2xl text-[#1A5F16]"></i>
+                        </div>
+                        <h4 class="font-bold text-base mb-2">Pelestarian Budaya</h4>
+                        <p class="text-gray-700">Bengkala menjaga warisan budaya baik berupa bahasa isyarat, kesenian, maupun ritual tradisional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Destinasi Wisata</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4 max-w-2xl mx-auto">Temukan berbagai destinasi menarik di Desa Bengkala yang menawarkan pengalaman alam, budaya, dan kehidupan masyarakat yang unik.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Destination 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md destination-card transition duration-300">
+                    <img src="img/tenun/foto TENUN/1.jpg" alt="KEM Bengkala" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">KEM Bengkala</h3>
+                        <p class="text-gray-700 mb-4">Kawasan Ekonomi Masyarakat (KEM) Bengkala menawarkan pengalaman berkemah di alam terbuka dengan pemandangan indah sawah terasering dan pegunungan.</p>
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="fas fa-campground mr-2"></i>
+                            <span>Area Bertenun, toilet umum, Tempat komunitas Kolok Menenun</span>
+                        </div>
+                        <div class="flex items-center text-gray-600 mb-4">
+                            <i class="fas fa-hiking mr-2"></i>
+                            <span>homestay, kelas menenun</span>
+                        </div>
+                        <a href="kem.html" class="inline-flex items-center text-[#1A5F16] hover:text-green-700 font-medium transition duration-300">
+                            <span class="mr-2">Selengkapnya</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Destination 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md destination-card transition duration-300">
+                    <img src="img/puseh/1.jpg" alt="Pura Desa Bengkala" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Pura Puseh</h3>
+                        <p class="text-gray-700 mb-4">Pura Puseh Bengkala merupakan pusat spiritual masyarakat dengan arsitektur tradisional Bali yang indah dan penuh makna filosofis.</p>
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="fas fa-archway mr-2"></i>
+                            <span>Arsitektur tradisional Bali, ukiran kayu</span>
+                        </div>
+                        <div class="flex items-center text-gray-600 mb-4">
+                            <i class="fas fa-praying-hands mr-2"></i>
+                            <span>Tempat upacara, area meditasi</span>
+                        </div>
+                        <a href="pura.html" class="inline-flex items-center text-[#1A5F16] hover:text-green-700 font-medium transition duration-300">
+                            <span class="mr-2">Selengkapnya</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Destination 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md destination-card transition duration-300">
+                    <img src="img/tukad/5.png" alt="Tukad Beji" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">Tukad Beji</h3>
+                        <p class="text-gray-700 mb-4">Tukad Beji adalah sungai dengan air mengalir yang menjadi tempat rekreasi favorit dan spot foto yang instagramable.</p>
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="fas fa-swimming-pool mr-2"></i>
+                            <span>Kolam alami, area berenang</span>
+                        </div>
+                        <div class="flex items-center text-gray-600 mb-4">
+                            <i class="fas fa-camera mr-2"></i>
+                            <span>Spot foto, gazebo, warung makan</span>
+                        </div>
+                        <a href="tukad-beji.html" class="inline-flex items-center text-[#1A5F16] hover:text-green-700 font-medium transition duration-300">
+                            <span class="mr-2">Selengkapnya</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Destination 4 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md destination-card transition duration-300">
+                    <img src="img/sd2/murid.png" alt="SD 2 Bengkala" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-[#1A5F16] mb-2">SD 2 Bengkala</h3>
+                        <p class="text-gray-700 mb-4">Sekolah inklusi yang unik di mana anak-anak Tuli dan mendengar belajar bersama menggunakan bahasa isyarat Bengkala.</p>
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="fas fa-school mr-2"></i>
+                            <span>Kelas inklusi, perpustakaan</span>
+                        </div>
+                        <div class="flex items-center text-gray-600 mb-4">
+                            <i class="fas fa-sign-language mr-2"></i>
+                            <span>Workshop bahasa isyarat, program budaya</span>
+                        </div>
+                        <a href="sd2-bengkala.html" class="inline-flex items-center text-[#1A5F16] hover:text-green-700 font-medium transition duration-300">
+                            <span class="mr-2">Selengkapnya</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+            
+
+            
+        
+                
+                <!-- Selengkapnya Button -->
+                
+    </section>
+
+    <!-- Souvenirs Section -->
+    <section id="souvenirs" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Souvenir Khas Bengkala</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4 max-w-2xl mx-auto">Bawa pulang kenangan dari Bengkala dengan produk lokal yang dibuat dengan penuh cinta oleh masyarakat setempat.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <!-- Souvenir 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://images.unsplash.com/photo-1595341595379-cf2df0343ca6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tenun Khas Bengkala" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-8 md:w-1/2">
+                            <h3 class="text-xl font-bold text-[#1A5F16] mb-4">Tenun Khas Bengkala</h3>
+                            <p class="text-gray-700 mb-4">Tenun tangan dengan motif tradisional yang mencerminkan budaya dan alam Bengkala. Setiap motif memiliki makna filosofis yang dalam.</p>
+                            <div class="mb-4">
+                                <h4 class="font-bold text-gray-800 mb-2">Motif Populer:</h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Motif "Kuping" - melambangkan komunitas Tuli Bengkala</li>
+                                    <li>Motif "Subak" - menggambarkan sistem irigasi tradisional</li>
+                                    <li>Motif "Pakis" - terinspirasi dari tumbuhan lokal</li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xl font-bold text-[#1A5F16]">Rp 250.000 - Rp 500.000</span>
+                                <button class="bg-[#1A5F16] text-white py-2 px-6 rounded-full hover:bg-green-800 transition duration-300" onclick="openContactForm('Pesan Tenun Khas Bengkala')">
+                                    Pesan Sekarang
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Souvenir 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Jamu Sakuntala" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-8 md:w-1/2">
+                            <h3 class="text-xl font-bold text-[#1A5F16] mb-4">Jamu Sakuntala</h3>
+                            <p class="text-gray-700 mb-4">Racikan jamu tradisional Bengkala yang diwariskan turun-temurun, dibuat dari rempah-rempah organik yang ditanam di desa.</p>
+                            <div class="mb-4">
+                                <h4 class="font-bold text-gray-800 mb-2">Manfaat:</h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li>Meningkatkan stamina dan daya tahan tubuh</li>
+                                    <li>Membantu pemulihan setelah sakit</li>
+                                    <li>Menjaga keseimbangan tubuh</li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xl font-bold text-[#1A5F16]">Rp 50.000 - Rp 100.000</span>
+                                <button class="bg-[#1A5F16] text-white py-2 px-6 rounded-full hover:bg-green-800 transition duration-300" onclick="openContactForm('Pesan Jamu Sakuntala')">
+                                    Pesan Sekarang
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-gray-700 mb-6">Ingin souvenir khusus atau dalam jumlah besar? Hubungi kami untuk diskusi lebih lanjut.</p>
+                <a href="#contact" class="bg-[#1A5F16] text-white font-bold py-3 px-8 rounded-full hover:bg-green-800 transition duration-300 inline-block">Hubungi Kami</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Fasilitas Desa Wisata</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4 max-w-2xl mx-auto">Bengkala menyediakan berbagai fasilitas untuk memastikan kenyamanan selama kunjungan Anda.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg text-center">
+                    <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-2xl text-[#1A5F16]"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Homestay</h3>
+                    <p class="text-gray-700">Penginapan tradisional dengan fasilitas modern yang dikelola oleh warga lokal.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg text-center">
+                    <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-utensils text-2xl text-[#1A5F16]"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Restoran</h3>
+                    <p class="text-gray-700">Warung makan dengan menu tradisional Bali dan hidangan khas Bengkala.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg text-center">
+                    <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-info-circle text-2xl text-[#1A5F16]"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Pusat Informasi</h3>
+                    <p class="text-gray-700">Loket informasi dengan peta dan brosur serta pemandu wisata.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg text-center">
+                    <div class="bg-[#1A5F16] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-toilet text-2xl text-[#1A5F16]"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Toilet Umum</h3>
+                    <p class="text-gray-700">Toilet bersih yang tersebar di beberapa titik strategis desa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-bold text-[#1A5F16] mb-4">Kontak & Lokasi</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4 max-w-2xl mx-auto">Hubungi kami untuk informasi lebih lanjut atau pemesanan kunjungan.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <form id="contactForm" class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Kirim Pesan</h3>
+                        
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subjek</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Pesan</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-[#1A5F16] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 transition duration-300 w-full">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-lg shadow-md h-full">
+                        <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Informasi Kontak</h3>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-[#1A5F16] text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Alamat</h4>
+                                    <p class="text-gray-700">Desa Bengkala, Kecamatan Kubutambahan, Kabupaten Buleleng, Bali 81172</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-[#1A5F16] text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Telepon</h4>
+                                    <p class="text-gray-700">+62 812-3456-7890</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-[#1A5F16] text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Email</h4>
+                                    <p class="text-gray-700">info@bengkalaeksplor.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+                            <p class="text-gray-600">Embed Google Maps akan muncul di sini</p>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-6">
+                            <a href="#" class="text-[#1A5F16] hover:text-green-700">
+                                <i class="fab fa-instagram text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-[#1A5F16] hover:text-green-700">
+                                <i class="fab fa-facebook text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-[#1A5F16] hover:text-green-700">
+                                <i class="fab fa-whatsapp text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-[#1A5F16] hover:text-green-700">
+                                <i class="fab fa-youtube text-2xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1A5F16] text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <img src="https://via.placeholder.com/150x50?text=Bengkala+Logo" alt="Bengkala Eksplor Logo" class="h-10 mb-4">
+                    <p class="mb-4">Bengkala Eksplor adalah desa wisata yang memadukan keindahan alam, budaya Bali, dan kehidupan inklusif masyarakat Tuli Bengkala.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:underline">Beranda</a></li>
+                        <li><a href="#profile" class="hover:underline">Profil Desa</a></li>
+                        <li><a href="#history" class="hover:underline">Sejarah</a></li>
+                        <li><a href="#destinations" class="hover:underline">Destinasi</a></li>
+                        <li><a href="#souvenirs" class="hover:underline">Souvenir</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Jam Operasional</h3>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between">
+                            <span>Senin - Jumat</span>
+                            <span>08.00 - 17.00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sabtu - Minggu</span>
+                            <span>08.00 - 19.00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Hari Besar</span>
+                            <span>09.00 - 15.00</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="mb-4">Dapatkan informasi terbaru tentang acara dan promo dari Bengkala Eksplor.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Email Anda" class="px-4 py-2 rounded-l-lg text-gray-800 w-full focus:outline-none">
+                        <button type="submit" class="bg-white text-[#1A5F16] px-4 py-2 rounded-r-lg font-bold">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 mt-8 pt-8 text-center">
+                <p>&copy; 2023 Bengkala Eksplor - Desa Wisata Budaya & Alam. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-[#1A5F16]" id="modalTitle">Pesan Souvenir</h3>
+                <button onclick="closeContactForm()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="souvenirForm" class="space-y-4">
+                <input type="hidden" id="productName">
+                
+                <div>
+                    <label for="modalName" class="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
+                    <input type="text" id="modalName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                </div>
+                
+                <div>
+                    <label for="modalEmail" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" id="modalEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                </div>
+                
+                <div>
+                    <label for="modalPhone" class="block text-gray-700 font-medium mb-2">Nomor WhatsApp</label>
+                    <input type="tel" id="modalPhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                </div>
+                
+                <div>
+                    <label for="modalQuantity" class="block text-gray-700 font-medium mb-2">Jumlah</label>
+                    <input type="number" id="modalQuantity" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent" required>
+                </div>
+                
+                <div>
+                    <label for="modalMessage" class="block text-gray-700 font-medium mb-2">Catatan Tambahan</label>
+                    <textarea id="modalMessage" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A5F16] focus:border-transparent"></textarea>
+                </div>
+                
+                <button type="submit" class="bg-[#1A5F16] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 transition duration-300 w-full">
+                    Kirim Pesanan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 80; // Adjust for fixed header
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
+            this.reset();
+        });
+
+        // Souvenir form submission
+        document.getElementById('souvenirForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const product = document.getElementById('productName').value;
+            alert(`Terima kasih! Pesanan ${product} Anda telah terkirim. Kami akan menghubungi Anda via WhatsApp untuk konfirmasi.`);
+            this.reset();
+            closeContactForm();
+        });
+
+        // Open contact modal for souvenir
+        function openContactForm(product) {
+            document.getElementById('modalTitle').textContent = `Pesan ${product}`;
+            document.getElementById('productName').value = product;
+            document.getElementById('contactModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close contact modal
+        function closeContactForm() {
+            document.getElementById('contactModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactForm();
+            }
+        });
+
+        // Sign Language Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const signLanguageBtn = document.getElementById('signLanguageBtn');
+            const signLanguageModal = document.getElementById('signLanguageModal');
+            const signLanguageOverlay = document.getElementById('signLanguageOverlay');
+            const closeSignLanguageModal = document.getElementById('closeSignLanguageModal');
+
+            console.log('Sign Language elements:', {
+                btn: signLanguageBtn,
+                modal: signLanguageModal,
+                overlay: signLanguageOverlay,
+                close: closeSignLanguageModal
+            });
+
+            if (signLanguageBtn) {
+                signLanguageBtn.addEventListener('click', function() {
+                    console.log('Sign Language button clicked!');
+                    if (signLanguageModal && signLanguageOverlay) {
+                        signLanguageModal.style.display = 'block';
+                        signLanguageOverlay.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                        console.log('Modal should be visible now');
+                    }
+                });
+            }
+
+            if (closeSignLanguageModal) {
+                closeSignLanguageModal.addEventListener('click', function() {
+                    signLanguageModal.style.display = 'none';
+                    signLanguageOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    // Pause all videos when modal is closed
+                    const videos = signLanguageModal.querySelectorAll('video');
+                    videos.forEach(video => video.pause());
+                });
+            }
+
+            if (signLanguageOverlay) {
+                signLanguageOverlay.addEventListener('click', function() {
+                    signLanguageModal.style.display = 'none';
+                    signLanguageOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    // Pause all videos when modal is closed
+                    const videos = signLanguageModal.querySelectorAll('video');
+                    videos.forEach(video => video.pause());
+                });
+            }
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && signLanguageModal && signLanguageModal.style.display === 'block') {
+                    signLanguageModal.style.display = 'none';
+                    signLanguageOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    // Pause all videos when modal is closed
+                    const videos = signLanguageModal.querySelectorAll('video');
+                    videos.forEach(video => video.pause());
+                }
+            });
+        });
+
+        // Video tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.video-tab-btn');
+            const videoContents = document.querySelectorAll('.video-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetVideo = this.getAttribute('data-video');
+                    
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.remove('text-[#1A5F16]', 'border-b-2', 'border-[#1A5F16]');
+                        btn.classList.add('text-gray-600');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    this.classList.remove('text-gray-600');
+                    this.classList.add('text-[#1A5F16]', 'border-b-2', 'border-[#1A5F16]');
+                    
+                    // Hide all video contents
+                    videoContents.forEach(content => {
+                        content.classList.add('hidden');
+                        // Pause all videos in hidden content
+                        const videos = content.querySelectorAll('video');
+                        videos.forEach(video => video.pause());
+                    });
+                    
+                    // Show target video content
+                    const targetContent = document.getElementById(targetVideo + '-video');
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Sign Language Modal -->
+    <div class="modal-overlay" id="signLanguageOverlay" style="display: none;"></div>
+    <div class="sign-language-modal" id="signLanguageModal" style="display: none;">
+        <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h3 class="text-2xl font-bold text-[#1A5F16]">Bahasa Isyarat Bengkala (Kata Kolok)</h3>
+                <button class="text-gray-500 hover:text-gray-700 text-2xl" id="closeSignLanguageModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <p class="text-gray-700 mb-4">Kata Kolok adalah bahasa isyarat alami yang berkembang di Desa Bengkala. Bahasa ini telah diakui sebagai warisan budaya takbenda Indonesia dan menjadi salah satu dari sedikit bahasa isyarat desa yang masih bertahan di dunia.</p>
+                    <p class="text-gray-700 mb-6">Tonton video berikut untuk mempelajari bahasa isyarat Bengkala:</p>
+                </div>
+                
+                <!-- Video Tabs -->
+                <div class="mb-6">
+                    <div class="flex border-b border-gray-200">
+                        <button class="video-tab-btn px-4 py-2 font-medium text-[#1A5F16] border-b-2 border-[#1A5F16]" data-video="profil">Profil Isyarat</button>
+                        <button class="video-tab-btn px-4 py-2 font-medium text-gray-600 hover:text-[#1A5F16] ml-4" data-video="sejarah">Sejarah Isyarat</button>
+                    </div>
+                </div>
+                
+                <!-- Video Players -->
+                <div class="video-content" id="profil-video">
+                    <div class="relative bg-gray-900 rounded-lg overflow-hidden mb-4">
+                        <video class="w-full h-64 md:h-96" controls>
+                            <source src="img/bahasa isyarat/profil isyarat.mp4" type="video/mp4">
+                            <p class="text-white p-4">Browser Anda tidak mendukung pemutar video.</p>
+                        </video>
+                    </div>
+                    <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                        <h4 class="font-bold text-[#1A5F16] mb-2">Profil Isyarat Bengkala:</h4>
+                        <p class="text-gray-700 text-sm">Video ini menjelaskan profil dan karakteristik unik bahasa isyarat Bengkala (Kata Kolok) yang digunakan oleh masyarakat Tuli di Desa Bengkala.</p>
+                    </div>
+                </div>
+                
+                <div class="video-content hidden" id="sejarah-video">
+                    <div class="relative bg-gray-900 rounded-lg overflow-hidden mb-4">
+                        <video class="w-full h-64 md:h-96" controls>
+                            <source src="img/bahasa isyarat/sejarah isyarat.mp4" type="video/mp4">
+                            <p class="text-white p-4">Browser Anda tidak mendukung pemutar video.</p>
+                        </video>
+                    </div>
+                    <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                        <h4 class="font-bold text-[#1A5F16] mb-2">Sejarah Isyarat Bengkala:</h4>
+                        <p class="text-gray-700 text-sm">Video ini menceritakan sejarah perkembangan bahasa isyarat Bengkala dan bagaimana bahasa ini menjadi bagian integral dari budaya masyarakat desa.</p>
+                    </div>
+                </div>
+                
+                <!-- Additional Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-users text-[#1A5F16] mr-2"></i>
+                            <h5 class="font-bold text-gray-800">Komunitas</h5>
+                        </div>
+                        <p class="text-sm text-gray-700">Sekitar 2% populasi Bengkala menggunakan Kata Kolok sebagai bahasa utama</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 p-4 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-graduation-cap text-[#1A5F16] mr-2"></i>
+                            <h5 class="font-bold text-gray-800">Pendidikan</h5>
+                        </div>
+                        <p class="text-sm text-gray-700">SD 2 Bengkala mengajarkan Kata Kolok kepada semua siswa</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">Untuk mempelajari lebih lanjut, kunjungi SD 2 Bengkala atau hubungi komunitas lokal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

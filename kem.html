@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEM Bengkala - Kawasan Edukasi dan Mitigasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- A-Frame for 360 view -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(26, 95, 22, 0.6), rgba(26, 95, 22, 0.3)), url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .gallery-item {
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .view-360 {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="https://via.placeholder.com/150x50?text=Bengkala+Logo" alt="Bengkala Eksplor Logo" class="h-10">
+                        <span class="ml-2 text-xl font-bold text-[#1A5F16]">Bengkala Eksplor</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#home" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Beranda</a>
+                    <a href="index.html#profile" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Profil Desa</a>
+                    <a href="index.html#history" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Sejarah</a>
+                    <a href="index.html#destinations" class="text-[#1A5F16] hover:text-green-700 px-3 py-2 font-medium">Destinasi</a>
+                    <a href="index.html#souvenirs" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Souvenir</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Kontak</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-[#1A5F16] focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html#home" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Beranda</a>
+                <a href="index.html#profile" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Profil Desa</a>
+                <a href="index.html#history" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Sejarah</a>
+                <a href="index.html#destinations" class="block px-3 py-2 text-[#1A5F16] font-medium">Destinasi</a>
+                <a href="index.html#souvenirs" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Souvenir</a>
+                <a href="index.html#contact" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center text-white pt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-6">KEM Bengkala</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Kawasan Edukasi dan Mitigasi Bengkala - Tempat Berkemah dan Belajar di Alam Terbuka</p>
+            <a href="#overview" class="bg-white text-[#1A5F16] font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block">Jelajahi KEM</a>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Tentang KEM Bengkala</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-[#1A5F16] mb-6">Kawasan Edukasi dan Mitigasi</h3>
+                    <p class="text-gray-700 mb-4">KEM Bengkala adalah kawasan edukasi dan mitigasi yang menawarkan pengalaman unik berkemah di alam terbuka dengan pemandangan indah sawah terasering dan pegunungan. Tempat ini dirancang sebagai pusat pembelajaran tentang alam, konservasi, dan kearifan lokal masyarakat Bengkala.</p>
+                    
+                    <p class="text-gray-700 mb-6">Dengan luas area sekitar 5 hektar, KEM Bengkala menyediakan berbagai fasilitas untuk kegiatan outdoor education, camping, dan workshop lingkungan. Lokasi ini juga menjadi tempat yang ideal untuk retreat, team building, dan kegiatan edukasi bagi sekolah-sekolah.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-campground text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Area Berkemah</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Spot camping dengan view sawah dan gunung</p>
+                        </div>
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-hiking text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Jalur Hiking</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Trek alam dengan berbagai tingkat kesulitan</p>
+                        </div>
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-fire text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Api Unggun</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Area api unggun untuk kegiatan malam</p>
+                        </div>
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-leaf text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Kelas Alam</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Workshop edukasi lingkungan dan konservasi</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="KEM Bengkala Overview" class="rounded-lg shadow-xl w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 360 View Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Jelajahi KEM dalam 360°</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4">Rasakan pengalaman virtual tour KEM Bengkala dengan teknologi 360°</p>
+            </div>
+            
+            <div class="view-360 mb-8">
+                <a-scene embedded style="height: 500px; width: 100%;">
+                    <!-- Ganti 'img/kem-360.jpg' dengan path foto 360 Anda -->
+                    <a-sky src="img/puseh360.jpg" rotation="0 -130 0"></a-sky>
+                    
+                </a-scene>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">Gunakan mouse atau touch untuk memutar pandangan 360°</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Galeri Foto</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Camping Area" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Area Berkemah</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hiking Trail" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Jalur Hiking</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain View" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Pemandangan Gunung</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1516298773066-c48f8e9bd92b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rice Terraces" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Sawah Terasering</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Campfire" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Api Unggun</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sunrise View" class="w-full h-64 object-cover rounded-lg shadow-md">
+                    <p class="text-center mt-2 text-gray-700 font-medium">Sunrise View</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities & Activities -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Fasilitas & Aktivitas</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Fasilitas Tersedia</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Area berkemah dengan kapasitas 50 tenda</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Toilet dan kamar mandi umum</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Tempat api unggun dan BBQ</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Gazebo dan shelter</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Area parkir kendaraan</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Warung makanan dan minuman</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Aktivitas yang Bisa Dilakukan</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Camping dan glamping</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Hiking dan trekking</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Photography dan bird watching</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Workshop edukasi lingkungan</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Team building activities</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
+                            <span>Sunrise dan sunset viewing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Booking -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Tertarik Berkunjung?</h2>
+            <div class="w-24 h-1 bg-[#1A5F16] mx-auto mb-8"></div>
+            <p class="text-gray-700 mb-8 text-lg">Hubungi kami untuk informasi lebih lanjut dan reservasi KEM Bengkala</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-phone text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">Telepon</h3>
+                    <p class="text-gray-700">+62 812-3456-7890</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fab fa-whatsapp text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">WhatsApp</h3>
+                    <p class="text-gray-700">+62 812-3456-7890</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-envelope text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">Email</h3>
+                    <p class="text-gray-700">info@bengkalaeksplor.com</p>
+                </div>
+            </div>
+            
+            <a href="index.html#contact" class="bg-[#1A5F16] text-white font-bold py-3 px-8 rounded-full hover:bg-green-800 transition duration-300 inline-block">
+                Hubungi Kami Sekarang
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1A5F16] text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Bengkala Eksplor. Semua hak dilindungi.</p>
+            <p class="mt-2">Desa Bengkala, Kecamatan Kubutambahan, Kabupaten Buleleng, Bali</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 80; // Adjust for fixed header
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

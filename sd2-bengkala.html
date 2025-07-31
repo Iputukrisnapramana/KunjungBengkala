@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pura Desa & Pura Puseh Bengkala - Pusat Spiritual Masyarakat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- A-Frame for 360 view -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(26, 95, 22, 0.6), rgba(26, 95, 22, 0.3)), url('img/sd2/sd 2.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .gallery-item {
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .view-360 {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .info-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="https://via.placeholder.com/150x50?text=Bengkala+Logo" alt="Bengkala Eksplor Logo" class="h-10">
+                        <span class="ml-2 text-xl font-bold text-[#1A5F16]">Bengkala Eksplor</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#home" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Beranda</a>
+                    <a href="index.html#profile" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Profil Desa</a>
+                    <a href="index.html#history" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Sejarah</a>
+                    <a href="index.html#destinations" class="text-[#1A5F16] hover:text-green-700 px-3 py-2 font-medium">Destinasi</a>
+                    <a href="index.html#souvenirs" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Souvenir</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-[#1A5F16] px-3 py-2 font-medium">Kontak</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-[#1A5F16] focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html#home" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Beranda</a>
+                <a href="index.html#profile" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Profil Desa</a>
+                <a href="index.html#history" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Sejarah</a>
+                <a href="index.html#destinations" class="block px-3 py-2 text-[#42551e] font-medium">Destinasi</a>
+                <a href="index.html#souvenirs" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Souvenir</a>
+                <a href="index.html#contact" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center text-white pt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-6">Pura Desa & Pura Puseh</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Pusat Spiritual Masyarakat Bengkala dengan Arsitektur Tradisional Bali yang Indah</p>
+            <a href="#overview" class="bg-white text-[#42551e] font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block">Jelajahi Pura</a>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Tentang Pura Desa & Pura Puseh</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-[#42551e] mb-6">Pusat Spiritual Masyarakat</h3>
+                    <p class="text-gray-700 mb-4">Pura Puseh Bengkala merupakan pusat spiritual masyarakat yang memiliki nilai sejarah dan budaya yang sangat tinggi. Kedua pura ini menjadi tempat pelaksanaan upacara keagamaan Hindu dan ritual adat yang telah berlangsung turun-temurun selama berabad-abad.</p>
+                    
+                    <p class="text-gray-700 mb-6">Arsitektur pura ini menampilkan keindahan seni ukir tradisional Bali dengan detail yang sangat halus. Setiap ornamen dan ukiran memiliki makna filosofis yang mendalam, mencerminkan konsep keharmonisan antara manusia, alam, dan Tuhan (Tri Hita Karana).</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-[#42551e] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-archway text-[#42551e] mr-3"></i>
+                                <h4 class="font-bold">Arsitektur Tradisional</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Gaya arsitektur Bali klasik dengan ukiran kayu</p>
+                        </div>
+                        <div class="bg-[#42551e] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-praying-hands text-[#42551e] mr-3"></i>
+                                <h4 class="font-bold">Tempat Upacara</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Pusat kegiatan keagamaan dan ritual adat</p>
+                        </div>
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-history text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Nilai Sejarah</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Warisan budaya berusia ratusan tahun</p>
+                        </div>
+                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-heart text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Spiritual</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Tempat meditasi dan refleksi spiritual</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="img/puseh/1.jpg" alt="Pura Bengkala Overview" class="rounded-lg shadow-xl w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 360 View Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Jelajahi Pura dalam 360°</h2>
+                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <p class="text-gray-700 mt-4">Rasakan pengalaman virtual tour Pura Puseh</p>
+            </div>
+            
+            <div class="view-360 mb-8">
+                <a-scene embedded style="height: 500px; width: 100%;" cursor="rayOrigin: mouse">
+                    <!-- 360 Background -->
+                    <a-sky src="img/pura/puseh360.jpg" rotation="0 -130 0"></a-sky>
+                    
+                    <!-- Camera with cursor -->
+                    <!-- <a-camera>
+                        <a-cursor 
+                            position="0 0 -1"
+                            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                            material="color: #1A5F16; shader: flat"
+                            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                            animation__fusing="property: scale; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                            raycaster="objects: .hotspot">
+                        </a-cursor>
+                    </a-camera> -->
+                    
+                    <!-- Interactive Hotspots -->
+                    <a-sphere 
+                        id="Dwarapala"
+                        position="-3.2 2.2 -4" 
+                        radius="0.15" 
+                        color="#1A5F16" 
+                        opacity="0.8"
+                        animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; dur: 1000; loop: true"
+                        class="hotspot clickable"
+                        data-info="Dwarapala - adalah arca penjaga pintu gerbang, 
+                        seringkali digambarkan sebagai sosok raksasa atau makhluk
+                         menyeramkan dengan senjata gada. Dalam budaya Hindu dan Buddha di Nusantara, 
+                         Dwarapala ditempatkan di depan pintu masuk candi atau pura sebagai simbol perlindungan dan penolak bala. "
+                        animation__mouseenter="property: scale; to: 1.5 1.5 1.5; startEvents: mouseenter; dur: 300"
+                        animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 300"
+                        hotspot-click>
+                    </a-sphere>
+                    
+                    
+                    
+                    <a-sphere 
+                        id="Candi Bentar"
+                        position="-1.5 3.5 -5" 
+                        radius="0.15" 
+                        color="#1A5F16" 
+                        opacity="0.8"
+                        animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; dur: 1000; loop: true"
+                        class="hotspot clickable"
+                        data-info="Candi Bentar adalah bangunan gapura khas yang terbelah menjadi dua bagian dan tidak memiliki 
+                        atap penghubung di bagian atas, sehingga kedua sisinya terpisah sempurna. Candi Bentar
+                         biasanya ditemukan di pintu masuk kompleks bangunan sakral, seperti pura, istana, atau pemakaman, 
+                         terutama di Jawa dan Bali. ."
+                        animation__mouseenter="property: scale; to: 1.5 1.5 1.5; startEvents: mouseenter; dur: 300"
+                        animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 300"
+                        hotspot-click>
+                    </a-sphere>
+                </a-scene>
+            </div>
+            
+            <!-- <div class="text-center">
+                <p class="text-gray-600 text-sm">Gunakan mouse atau touch untuk memutar pandangan 360°</p>
+                <p class="text-gray-600 text-sm mt-2">Klik tombol hijau berkedip untuk informasi patung</p>
+            </div> -->
+        </div>
+    </section>
+    
+    <!-- Modal for Hotspot Information -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="info-modal" id="infoModal">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-[#42551e]" id="modalTitle">Informasi Patung</h3>
+            <button class="text-gray-500 hover:text-gray-700" id="closeModal">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <p class="text-gray-700" id="modalContent">Informasi akan muncul di sini</p>
+    </div>
+
+    <!-- Photo Gallery -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Galeri Foto</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
+            </div>
+            
+            <!-- Masonry Grid -->
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/1.jpg" alt="Pura Puseh Bengkala" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                </div>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/2.jpg" alt="Arsitektur Pura" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                </div>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/3.jpg" alt="Detail Ukiran" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                </div>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/4.png" alt="Area Upacara" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                </div>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/5.png" alt="Kompleks Pura" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Significance -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Makna Budaya & Spiritual</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold text-[#42551e] mb-6">Pura Desa</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-temple text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Fungsi Utama</h4>
+                                <p class="text-gray-700 text-sm">Tempat pemujaan Dewa Brahma sebagai pencipta dan pelindung desa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-calendar-alt text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Upacara Penting</h4>
+                                <p class="text-gray-700 text-sm">Piodalan, Galungan, Kuningan, dan upacara adat desa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-users text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Komunitas</h4>
+                                <p class="text-gray-700 text-sm">Pusat kegiatan keagamaan seluruh masyarakat desa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-[#42551e] mb-6">Pura Puseh</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-heart text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Fungsi Utama</h4>
+                                <p class="text-gray-700 text-sm">Tempat pemujaan leluhur dan roh suci pendiri desa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-leaf text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Filosofi</h4>
+                                <p class="text-gray-700 text-sm">Simbol asal-usul dan kesuburan tanah Bengkala</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-seedling text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Ritual Pertanian</h4>
+                                <p class="text-gray-700 text-sm">Upacara terkait siklus pertanian dan panen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visitor Guidelines -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Panduan Berkunjung</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
+            </div>
+            
+            <div class="bg-[#42551e] bg-opacity-10 p-8 rounded-lg">
+                <h3 class="text-xl font-bold text-[#42551e] mb-6 text-center">Etika dan Aturan Berkunjung</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Berpakaian sopan dan rapi (sarung/selendang)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Menjaga ketenangan dan kesakralan</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Mengikuti arahan pemandu lokal</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak menyentuh arca atau benda suci</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak memasuki area terlarang</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak membuat keributan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Booking -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Tertarik Berkunjung?</h2>
+            <div class="w-24 h-1 bg-[#1A5F16] mx-auto mb-8"></div>
+            <p class="text-gray-700 mb-8 text-lg">Hubungi kami untuk informasi lebih lanjut dan panduan wisata spiritual</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-phone text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">Telepon</h3>
+                    <p class="text-gray-700">+62 812-3456-7890</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fab fa-whatsapp text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">WhatsApp</h3>
+                    <p class="text-gray-700">+62 812-3456-7890</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-envelope text-3xl text-[#1A5F16] mb-4"></i>
+                    <h3 class="font-bold mb-2">Email</h3>
+                    <p class="text-gray-700">info@bengkalaeksplor.com</p>
+                </div>
+            </div>
+            
+            <a href="index.html#contact" class="bg-[#1A5F16] text-white font-bold py-3 px-8 rounded-full hover:bg-green-800 transition duration-300 inline-block">
+                Hubungi Kami Sekarang
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1A5F16] text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Bengkala Eksplor. Semua hak dilindungi.</p>
+            <p class="mt-2">Desa Bengkala, Kecamatan Kubutambahan, Kabupaten Buleleng, Bali</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 80; // Adjust for fixed header
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Hotspot interaction for 360 view
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('infoModal');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const closeModal = document.getElementById('closeModal');
+            
+            // Function to show modal
+            function showModal(title, info) {
+                modalTitle.textContent = title;
+                modalContent.textContent = info;
+                modal.style.display = 'block';
+                modalOverlay.style.display = 'block';
+            }
+            
+            // Wait for A-Frame to load and add event listeners
+            setTimeout(() => {
+                const scene = document.querySelector('a-scene');
+                if (scene.hasLoaded) {
+                    addHotspotListeners();
+                } else {
+                    scene.addEventListener('loaded', addHotspotListeners);
+                }
+                
+                function addHotspotListeners() {
+                    // Add click event listeners to hotspots
+                    document.getElementById('hotspot1').addEventListener('click', function() {
+                        showModal('Arca Ganesha', this.getAttribute('data-info'));
+                    });
+                    
+                    document.getElementById('hotspot2').addEventListener('click', function() {
+                        showModal('Arca Dewi Sri', this.getAttribute('data-info'));
+                    });
+                    
+                    document.getElementById('hotspot3').addEventListener('click', function() {
+                        showModal('Arca Barong', this.getAttribute('data-info'));
+                    });
+                }
+            }, 1000);
+            
+            // Close modal functionality
+            function closeModalFunc() {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+            }
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            modalOverlay.addEventListener('click', closeModalFunc);
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModalFunc();
+                }
+            });
+        });
+        
+        // A-Frame component for hotspot clicks
+        AFRAME.registerComponent('hotspot-click', {
+            init: function () {
+                this.el.addEventListener('click', function (evt) {
+                    const info = this.getAttribute('data-info');
+                    const hotspotId = this.getAttribute('id');
+                    
+                    let title = 'Informasi';
+                    if (hotspotId === 'hotspot1') title = 'Arca Ganesha';
+                    else if (hotspotId === 'hotspot2') title = 'Arca Dewi Sri';
+                    else if (hotspotId === 'hotspot3') title = 'Arca Barong';
+                    
+                    // Trigger modal
+                    const modal = document.getElementById('infoModal');
+                    const modalOverlay = document.getElementById('modalOverlay');
+                    const modalTitle = document.getElementById('modalTitle');
+                    const modalContent = document.getElementById('modalContent');
+                    
+                    modalTitle.textContent = title;
+                    modalContent.textContent = info;
+                    modal.style.display = 'block';
+                    modalOverlay.style.display = 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
