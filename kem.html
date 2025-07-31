@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEM Bengkala - Kawasan Edukasi dan Mitigasi</title>
+    <title>Pura Desa & Pura Puseh Bengkala - Pusat Spiritual Masyarakat</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- A-Frame for 360 view -->
@@ -17,7 +17,7 @@
         }
         
         .hero-bg {
-            background: linear-gradient(rgba(26, 95, 22, 0.6), rgba(26, 95, 22, 0.3)), url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background: linear-gradient(rgba(26, 95, 22, 0.6), rgba(26, 95, 22, 0.3)), url('https://images.unsplash.com/photo-1583423230902-754c8f61a8d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
         }
@@ -34,6 +34,31 @@
             height: 500px;
             border-radius: 12px;
             overflow: hidden;
+        }
+        
+        .info-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
         }
     </style>
 </head>
@@ -68,12 +93,12 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-white">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html#home" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Beranda</a>
-                <a href="index.html#profile" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Profil Desa</a>
-                <a href="index.html#history" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Sejarah</a>
-                <a href="index.html#destinations" class="block px-3 py-2 text-[#1A5F16] font-medium">Destinasi</a>
-                <a href="index.html#souvenirs" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Souvenir</a>
-                <a href="index.html#contact" class="block px-3 py-2 text-gray-700 hover:text-[#1A5F16]">Kontak</a>
+                <a href="index.html#home" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Beranda</a>
+                <a href="index.html#profile" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Profil Desa</a>
+                <a href="index.html#history" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Sejarah</a>
+                <a href="index.html#destinations" class="block px-3 py-2 text-[#42551e] font-medium">Destinasi</a>
+                <a href="index.html#souvenirs" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Souvenir</a>
+                <a href="index.html#contact" class="block px-3 py-2 text-gray-700 hover:text-[#42551e]">Kontak</a>
             </div>
         </div>
     </nav>
@@ -81,9 +106,9 @@
     <!-- Hero Section -->
     <section class="hero-bg min-h-screen flex items-center justify-center text-white pt-16">
         <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-6">KEM Bengkala</h1>
-            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Kawasan Edukasi dan Mitigasi Bengkala - Tempat Berkemah dan Belajar di Alam Terbuka</p>
-            <a href="#overview" class="bg-white text-[#1A5F16] font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block">Jelajahi KEM</a>
+            <h1 class="text-3xl md:text-5xl font-bold mb-6">Pura Desa & Pura Puseh</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Pusat Spiritual Masyarakat Bengkala dengan Arsitektur Tradisional Bali yang Indah</p>
+            <a href="#overview" class="bg-white text-[#42551e] font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block">Jelajahi Pura</a>
         </div>
     </section>
 
@@ -91,50 +116,50 @@
     <section id="overview" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Tentang KEM Bengkala</h2>
-                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Tentang Pura Desa & Pura Puseh</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
                 <div>
-                    <h3 class="text-2xl font-bold text-[#1A5F16] mb-6">Kawasan Edukasi dan Mitigasi</h3>
-                    <p class="text-gray-700 mb-4">KEM Bengkala adalah kawasan edukasi dan mitigasi yang menawarkan pengalaman unik berkemah di alam terbuka dengan pemandangan indah sawah terasering dan pegunungan. Tempat ini dirancang sebagai pusat pembelajaran tentang alam, konservasi, dan kearifan lokal masyarakat Bengkala.</p>
+                    <h3 class="text-2xl font-bold text-[#42551e] mb-6">Pusat Spiritual Masyarakat</h3>
+                    <p class="text-gray-700 mb-4">Pura Puseh Bengkala merupakan pusat spiritual masyarakat yang memiliki nilai sejarah dan budaya yang sangat tinggi. Kedua pura ini menjadi tempat pelaksanaan upacara keagamaan Hindu dan ritual adat yang telah berlangsung turun-temurun selama berabad-abad.</p>
                     
-                    <p class="text-gray-700 mb-6">Dengan luas area sekitar 5 hektar, KEM Bengkala menyediakan berbagai fasilitas untuk kegiatan outdoor education, camping, dan workshop lingkungan. Lokasi ini juga menjadi tempat yang ideal untuk retreat, team building, dan kegiatan edukasi bagi sekolah-sekolah.</p>
+                    <p class="text-gray-700 mb-6">Arsitektur pura ini menampilkan keindahan seni ukir tradisional Bali dengan detail yang sangat halus. Setiap ornamen dan ukiran memiliki makna filosofis yang mendalam, mencerminkan konsep keharmonisan antara manusia, alam, dan Tuhan (Tri Hita Karana).</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
+                        <div class="bg-[#42551e] bg-opacity-10 p-4 rounded-lg">
                             <div class="flex items-center mb-2">
-                                <i class="fas fa-campground text-[#1A5F16] mr-3"></i>
-                                <h4 class="font-bold">Area Berkemah</h4>
+                                <i class="fas fa-archway text-[#42551e] mr-3"></i>
+                                <h4 class="font-bold">Arsitektur Tradisional</h4>
                             </div>
-                            <p class="text-sm text-gray-700">Spot camping dengan view sawah dan gunung</p>
+                            <p class="text-sm text-gray-700">Gaya arsitektur Bali klasik dengan ukiran kayu</p>
+                        </div>
+                        <div class="bg-[#42551e] bg-opacity-10 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-praying-hands text-[#42551e] mr-3"></i>
+                                <h4 class="font-bold">Tempat Upacara</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">Pusat kegiatan keagamaan dan ritual adat</p>
                         </div>
                         <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
                             <div class="flex items-center mb-2">
-                                <i class="fas fa-hiking text-[#1A5F16] mr-3"></i>
-                                <h4 class="font-bold">Jalur Hiking</h4>
+                                <i class="fas fa-history text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Nilai Sejarah</h4>
                             </div>
-                            <p class="text-sm text-gray-700">Trek alam dengan berbagai tingkat kesulitan</p>
+                            <p class="text-sm text-gray-700">Warisan budaya berusia ratusan tahun</p>
                         </div>
                         <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
                             <div class="flex items-center mb-2">
-                                <i class="fas fa-fire text-[#1A5F16] mr-3"></i>
-                                <h4 class="font-bold">Api Unggun</h4>
+                                <i class="fas fa-heart text-[#1A5F16] mr-3"></i>
+                                <h4 class="font-bold">Spiritual</h4>
                             </div>
-                            <p class="text-sm text-gray-700">Area api unggun untuk kegiatan malam</p>
-                        </div>
-                        <div class="bg-[#1A5F16] bg-opacity-10 p-4 rounded-lg">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-leaf text-[#1A5F16] mr-3"></i>
-                                <h4 class="font-bold">Kelas Alam</h4>
-                            </div>
-                            <p class="text-sm text-gray-700">Workshop edukasi lingkungan dan konservasi</p>
+                            <p class="text-sm text-gray-700">Tempat meditasi dan refleksi spiritual</p>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="KEM Bengkala Overview" class="rounded-lg shadow-xl w-full h-96 object-cover">
+                    <img src="img/puseh/1.jpg" alt="Pura Bengkala Overview" class="rounded-lg shadow-xl w-full h-96 object-cover">
                 </div>
             </div>
         </div>
@@ -144,126 +169,217 @@
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Jelajahi KEM dalam 360°</h2>
+                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Jelajahi Pura dalam 360°</h2>
                 <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
-                <p class="text-gray-700 mt-4">Rasakan pengalaman virtual tour KEM Bengkala dengan teknologi 360°</p>
+                <p class="text-gray-700 mt-4">Rasakan pengalaman virtual tour Pura Puseh</p>
             </div>
             
             <div class="view-360 mb-8">
-                <a-scene embedded style="height: 500px; width: 100%;">
-                    <!-- Ganti 'img/kem-360.jpg' dengan path foto 360 Anda -->
-                    <a-sky src="img/puseh360.jpg" rotation="0 -130 0"></a-sky>
+                <a-scene embedded style="height: 500px; width: 100%;" cursor="rayOrigin: mouse">
+                    <!-- 360 Background -->
+                    <a-sky src="puseh360.jpg" rotation="0 -130 0"></a-sky>
                     
+                    <!-- Camera with cursor -->
+                    <!-- <a-camera>
+                        <a-cursor 
+                            position="0 0 -1"
+                            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                            material="color: #1A5F16; shader: flat"
+                            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                            animation__fusing="property: scale; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                            raycaster="objects: .hotspot">
+                        </a-cursor>
+                    </a-camera> -->
+                    
+                    <!-- Interactive Hotspots -->
+                    <a-sphere 
+                        id="Dwarapala"
+                        position="-3.2 2.2 -4" 
+                        radius="0.15" 
+                        color="#1A5F16" 
+                        opacity="0.8"
+                        animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; dur: 1000; loop: true"
+                        class="hotspot clickable"
+                        data-info="Dwarapala - adalah arca penjaga pintu gerbang, 
+                        seringkali digambarkan sebagai sosok raksasa atau makhluk
+                         menyeramkan dengan senjata gada. Dalam budaya Hindu dan Buddha di Nusantara, 
+                         Dwarapala ditempatkan di depan pintu masuk candi atau pura sebagai simbol perlindungan dan penolak bala. "
+                        animation__mouseenter="property: scale; to: 1.5 1.5 1.5; startEvents: mouseenter; dur: 300"
+                        animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 300"
+                        hotspot-click>
+                    </a-sphere>
+                    
+                    
+                    
+                    <a-sphere 
+                        id="Candi Bentar"
+                        position="-1.5 3.5 -5" 
+                        radius="0.15" 
+                        color="#1A5F16" 
+                        opacity="0.8"
+                        animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; dur: 1000; loop: true"
+                        class="hotspot clickable"
+                        data-info="Candi Bentar adalah bangunan gapura khas yang terbelah menjadi dua bagian dan tidak memiliki 
+                        atap penghubung di bagian atas, sehingga kedua sisinya terpisah sempurna. Candi Bentar
+                         biasanya ditemukan di pintu masuk kompleks bangunan sakral, seperti pura, istana, atau pemakaman, 
+                         terutama di Jawa dan Bali. ."
+                        animation__mouseenter="property: scale; to: 1.5 1.5 1.5; startEvents: mouseenter; dur: 300"
+                        animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 300"
+                        hotspot-click>
+                    </a-sphere>
                 </a-scene>
             </div>
             
-            <div class="text-center">
+            <!-- <div class="text-center">
                 <p class="text-gray-600 text-sm">Gunakan mouse atau touch untuk memutar pandangan 360°</p>
-            </div>
+                <p class="text-gray-600 text-sm mt-2">Klik tombol hijau berkedip untuk informasi patung</p>
+            </div> -->
         </div>
     </section>
+    
+    <!-- Modal for Hotspot Information -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="info-modal" id="infoModal">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-[#42551e]" id="modalTitle">Informasi Patung</h3>
+            <button class="text-gray-500 hover:text-gray-700" id="closeModal">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <p class="text-gray-700" id="modalContent">Informasi akan muncul di sini</p>
+    </div>
 
     <!-- Photo Gallery -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Galeri Foto</h2>
-                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Galeri Foto</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Camping Area" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Area Berkemah</p>
+            <!-- Masonry Grid -->
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/1.jpg" alt="Pura Puseh Bengkala" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hiking Trail" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Jalur Hiking</p>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/2.jpg" alt="Arsitektur Pura" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain View" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Pemandangan Gunung</p>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/3.jpg" alt="Detail Ukiran" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1516298773066-c48f8e9bd92b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rice Terraces" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Sawah Terasering</p>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/4.png" alt="Area Upacara" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Campfire" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Api Unggun</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sunrise View" class="w-full h-64 object-cover rounded-lg shadow-md">
-                    <p class="text-center mt-2 text-gray-700 font-medium">Sunrise View</p>
+                <div class="break-inside-avoid mb-6">
+                    <img src="img/puseh/5.png" alt="Kompleks Pura" class="w-full rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Facilities & Activities -->
+    <!-- Cultural Significance -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Fasilitas & Aktivitas</h2>
-                <div class="w-24 h-1 bg-[#1A5F16] mx-auto"></div>
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Makna Budaya & Spiritual</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Fasilitas Tersedia</h3>
+                    <h3 class="text-xl font-bold text-[#42551e] mb-6">Pura Desa</h3>
                     <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Area berkemah dengan kapasitas 50 tenda</span>
+                        <div class="flex items-start">
+                            <i class="fas fa-temple text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Fungsi Utama</h4>
+                                <p class="text-gray-700 text-sm">Tempat pemujaan Dewa Brahma sebagai pencipta dan pelindung desa</p>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Toilet dan kamar mandi umum</span>
+                        <div class="flex items-start">
+                            <i class="fas fa-calendar-alt text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Upacara Penting</h4>
+                                <p class="text-gray-700 text-sm">Piodalan, Galungan, Kuningan, dan upacara adat desa</p>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Tempat api unggun dan BBQ</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Gazebo dan shelter</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Area parkir kendaraan</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
-                            <span>Warung makanan dan minuman</span>
+                        <div class="flex items-start">
+                            <i class="fas fa-users text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Komunitas</h4>
+                                <p class="text-gray-700 text-sm">Pusat kegiatan keagamaan seluruh masyarakat desa</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-[#1A5F16] mb-6">Aktivitas yang Bisa Dilakukan</h3>
+                    <h3 class="text-xl font-bold text-[#42551e] mb-6">Pura Puseh</h3>
                     <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-heart text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Fungsi Utama</h4>
+                                <p class="text-gray-700 text-sm">Tempat pemujaan leluhur dan roh suci pendiri desa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-leaf text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Filosofi</h4>
+                                <p class="text-gray-700 text-sm">Simbol asal-usul dan kesuburan tanah Bengkala</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-seedling text-[#42551e] mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold mb-1">Ritual Pertanian</h4>
+                                <p class="text-gray-700 text-sm">Upacara terkait siklus pertanian dan panen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visitor Guidelines -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#42551e] mb-4">Panduan Berkunjung</h2>
+                <div class="w-24 h-1 bg-[#42551e] mx-auto"></div>
+            </div>
+            
+            <div class="bg-[#42551e] bg-opacity-10 p-8 rounded-lg">
+                <h3 class="text-xl font-bold text-[#42551e] mb-6 text-center">Etika dan Aturan Berkunjung</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
                         <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Camping dan glamping</span>
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Berpakaian sopan dan rapi (sarung/selendang)</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Hiking dan trekking</span>
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Menjaga ketenangan dan kesakralan</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Photography dan bird watching</span>
+                            <i class="fas fa-check-circle text-[#1A5F16] mr-3"></i>
+                            <span>Mengikuti arahan pemandu lokal</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak menyentuh arca atau benda suci</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Workshop edukasi lingkungan</span>
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak memasuki area terlarang</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Team building activities</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-[#1A5F16] mr-3"></i>
-                            <span>Sunrise dan sunset viewing</span>
+                            <i class="fas fa-times-circle text-red-500 mr-3"></i>
+                            <span>Tidak membuat keributan</span>
                         </div>
                     </div>
                 </div>
@@ -272,24 +388,24 @@
     </section>
 
     <!-- Contact & Booking -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-[#1A5F16] mb-4">Tertarik Berkunjung?</h2>
             <div class="w-24 h-1 bg-[#1A5F16] mx-auto mb-8"></div>
-            <p class="text-gray-700 mb-8 text-lg">Hubungi kami untuk informasi lebih lanjut dan reservasi KEM Bengkala</p>
+            <p class="text-gray-700 mb-8 text-lg">Hubungi kami untuk informasi lebih lanjut dan panduan wisata spiritual</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="bg-white p-6 rounded-lg shadow-md">
                     <i class="fas fa-phone text-3xl text-[#1A5F16] mb-4"></i>
                     <h3 class="font-bold mb-2">Telepon</h3>
                     <p class="text-gray-700">+62 812-3456-7890</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="bg-white p-6 rounded-lg shadow-md">
                     <i class="fab fa-whatsapp text-3xl text-[#1A5F16] mb-4"></i>
                     <h3 class="font-bold mb-2">WhatsApp</h3>
                     <p class="text-gray-700">+62 812-3456-7890</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="bg-white p-6 rounded-lg shadow-md">
                     <i class="fas fa-envelope text-3xl text-[#1A5F16] mb-4"></i>
                     <h3 class="font-bold mb-2">Email</h3>
                     <p class="text-gray-700">info@bengkalaeksplor.com</p>
@@ -344,6 +460,90 @@
                     });
                 }
             });
+        });
+        
+        // Hotspot interaction for 360 view
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('infoModal');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const closeModal = document.getElementById('closeModal');
+            
+            // Function to show modal
+            function showModal(title, info) {
+                modalTitle.textContent = title;
+                modalContent.textContent = info;
+                modal.style.display = 'block';
+                modalOverlay.style.display = 'block';
+            }
+            
+            // Wait for A-Frame to load and add event listeners
+            setTimeout(() => {
+                const scene = document.querySelector('a-scene');
+                if (scene.hasLoaded) {
+                    addHotspotListeners();
+                } else {
+                    scene.addEventListener('loaded', addHotspotListeners);
+                }
+                
+                function addHotspotListeners() {
+                    // Add click event listeners to hotspots
+                    document.getElementById('hotspot1').addEventListener('click', function() {
+                        showModal('Arca Ganesha', this.getAttribute('data-info'));
+                    });
+                    
+                    document.getElementById('hotspot2').addEventListener('click', function() {
+                        showModal('Arca Dewi Sri', this.getAttribute('data-info'));
+                    });
+                    
+                    document.getElementById('hotspot3').addEventListener('click', function() {
+                        showModal('Arca Barong', this.getAttribute('data-info'));
+                    });
+                }
+            }, 1000);
+            
+            // Close modal functionality
+            function closeModalFunc() {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+            }
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            modalOverlay.addEventListener('click', closeModalFunc);
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModalFunc();
+                }
+            });
+        });
+        
+        // A-Frame component for hotspot clicks
+        AFRAME.registerComponent('hotspot-click', {
+            init: function () {
+                this.el.addEventListener('click', function (evt) {
+                    const info = this.getAttribute('data-info');
+                    const hotspotId = this.getAttribute('id');
+                    
+                    let title = 'Informasi';
+                    if (hotspotId === 'hotspot1') title = 'Arca Ganesha';
+                    else if (hotspotId === 'hotspot2') title = 'Arca Dewi Sri';
+                    else if (hotspotId === 'hotspot3') title = 'Arca Barong';
+                    
+                    // Trigger modal
+                    const modal = document.getElementById('infoModal');
+                    const modalOverlay = document.getElementById('modalOverlay');
+                    const modalTitle = document.getElementById('modalTitle');
+                    const modalContent = document.getElementById('modalContent');
+                    
+                    modalTitle.textContent = title;
+                    modalContent.textContent = info;
+                    modal.style.display = 'block';
+                    modalOverlay.style.display = 'block';
+                });
+            }
         });
     </script>
 </body>
